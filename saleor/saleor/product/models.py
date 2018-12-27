@@ -131,6 +131,7 @@ class Product(SeoModel):
     tax_rate = models.CharField(
         max_length=128, default=DEFAULT_TAX_RATE_NAME, blank=True,
         choices=TaxRateType.CHOICES)
+    GST = models.IntegerField(null=True, blank=True, default=0)
     weight = MeasurementField(
         measurement=Weight, unit_choices=WeightUnits.CHOICES,
         blank=True, null=True)

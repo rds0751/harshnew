@@ -224,7 +224,7 @@ class ProductForm(forms.ModelForm, AttributesMixin):
     tax_rate = forms.ChoiceField(
         required=False,
         label=pgettext_lazy('Product tax rate type', 'Tax rate'))
-
+    GST = forms.IntegerField()
     category = TreeNodeChoiceField(
         queryset=Category.objects.all(),
         label=pgettext_lazy('Category', 'Category'))
@@ -271,6 +271,8 @@ class ProductForm(forms.ModelForm, AttributesMixin):
         self.fields['seo_title'] = SeoTitleField(
             extra_attrs={'data-bind': self['name'].auto_id})
         self.fields['tax_rate'].choices = get_tax_rate_type_choices()
+        self.fields['GST'].widget.attrs['placeholder'] = (
+            )
         if include_taxes_in_prices():
             self.fields['price'].label = pgettext_lazy(
                 'Currency gross amount', 'Gross price')

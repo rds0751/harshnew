@@ -66,7 +66,7 @@ def summary_with_shipping_view(request, cart):
         return handle_order_placement(request, cart)
 
     taxes = get_taxes_for_cart(cart, request.taxes)
-    cart.user.balance = cart.user.balance + cart.value
+    cart.user.balance = cart.user.balance + cart.discount_amount
     ctx = get_cart_data_for_checkout(cart, request.discounts, taxes)
     ctx.update({
         'additional_addresses': user_addresses,

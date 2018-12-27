@@ -10,9 +10,9 @@ from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 from django_countries.fields import Country, CountryField
 from phonenumber_field.modelfields import PhoneNumber, PhoneNumberField
+from django_prices.models import MoneyField
 
 from .validators import validate_possible_number
-
 
 class PossiblePhoneNumberField(PhoneNumberField):
     """Less strict field for phone numbers written to database."""
@@ -108,7 +108,11 @@ def get_token():
 
 class User(PermissionsMixin, AbstractBaseUser):
     email = models.EmailField(unique=True)
-    balance = models.FloatField(null=True, blank=True, default=0.0)
+    balance = MoneyField(
+        currency=settings.DEFAULT_CURRENCY,
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0.0)
     first_name = models.CharField(max_length=256, blank=True)
     last_name = models.CharField(max_length=256, blank=True)
     addresses = models.ManyToManyField(

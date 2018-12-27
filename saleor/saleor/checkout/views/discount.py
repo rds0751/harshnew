@@ -26,6 +26,8 @@ def add_voucher_form(view):
         if voucher_form.is_bound:
             if voucher_form.is_valid():
                 voucher_form.save()
+                cart.user.balance = cart.user.balance + cart.discount_amount
+                cart.user.save()
                 next_url = request.GET.get(
                     'next', request.META['HTTP_REFERER'])
                 return redirect(next_url)
